@@ -1,6 +1,6 @@
 import 'package:location/location.dart';
 
-class CurrentLocation {
+class LocationHelper {
   static Future<dynamic> getDeviceLocation() async {
     Location _location = new Location();
 

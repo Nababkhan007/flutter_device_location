@@ -1,18 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart';
-import 'package:location/location.dart';
-import 'package:flutter_device_location/current_location.dart';
+import 'package:flutter_device_location/ui/location/current_location_screen.dart';
 
 void main() => runApp(DeviceLocation());
 
-class DeviceLocation extends StatefulWidget {
-  @override
-  _DeviceLocationState createState() => _DeviceLocationState();
-}
-
-class _DeviceLocationState extends State<DeviceLocation> {
-  String _currentLocation = "";
-
+class DeviceLocation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -21,87 +12,7 @@ class _DeviceLocationState extends State<DeviceLocation> {
         accentColor: Colors.amber,
         primaryColor: Colors.red,
       ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            "Device Location",
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                "Get device location",
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.red,
-                ),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              Icon(
-                Icons.location_on,
-                size: 22.0,
-                color: Colors.red,
-              ),
-              SizedBox(
-                height: 5.0,
-              ),
-              Text(
-                _currentLocation,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 14.0,
-                  color: Colors.redAccent,
-                ),
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              ElevatedButton(
-                onPressed: () => _getDeviceLocation(),
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
-                    Colors.red,
-                  ),
-                ),
-                child: Text(
-                  "Tap Here",
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+      home: CurrentLocationScreen(),
     );
-  }
-
-  _getDeviceLocation() async {
-    try {
-      LocationData locationData = await CurrentLocation.getDeviceLocation();
-      List<Placemark> placeMarkList = await placemarkFromCoordinates(
-          locationData.latitude, locationData.longitude);
-      setState(() {
-        locationData != null
-            ? _currentLocation =
-                "Address: ${placeMarkList[0].name}, ${placeMarkList[0].country}\n "
-                    "Latitude: ${locationData.latitude.toString()}, "
-                    "Longitude: ${locationData.longitude.toString()}"
-            : _currentLocation = "";
-      });
-    } catch (exception) {
-      throw exception;
-    }
   }
 }
