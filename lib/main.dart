@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:location/location.dart';
+import 'package:flutter_device_location/current_location.dart';
 
 void main() => runApp(DeviceLocation());
 
@@ -8,6 +10,8 @@ class DeviceLocation extends StatefulWidget {
 }
 
 class _DeviceLocationState extends State<DeviceLocation> {
+  String _currentLocation = "";
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -47,10 +51,20 @@ class _DeviceLocationState extends State<DeviceLocation> {
                 color: Colors.red,
               ),
               SizedBox(
+                height: 5.0,
+              ),
+              Text(
+                _currentLocation,
+                style: TextStyle(
+                  fontSize: 14.0,
+                  color: Colors.redAccent,
+                ),
+              ),
+              SizedBox(
                 height: 20.0,
               ),
               ElevatedButton(
-                onPressed: _getDeviceLocation(),
+                onPressed: () => _getDeviceLocation(),
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(
                     Colors.red,
@@ -71,5 +85,13 @@ class _DeviceLocationState extends State<DeviceLocation> {
     );
   }
 
-  _getDeviceLocation() {}
+  _getDeviceLocation() async {
+    LocationData locationData = await CurrentLocation.getDeviceLocation();
+    setState(() {
+      locationData != null
+          ? _currentLocation =
+              "Latitude: ${locationData.latitude.toString()}, Longitude: ${locationData.longitude.toString()}"
+          : _currentLocation = "";
+    });
+  }
 }
