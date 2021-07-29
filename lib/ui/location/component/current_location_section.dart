@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:flutter_device_location/helper/text_helper.dart';
 import 'package:flutter_device_location/helper/location_helper.dart';
 import 'package:flutter_device_location/ui/location/component/current_location_body.dart';
 
@@ -28,9 +29,9 @@ class _CurrentLocationSectionState extends State<CurrentLocationSection> {
       setState(() {
         locationData != null
             ? _currentLocation =
-                "Address: ${placeMarkList[0].name}, ${placeMarkList[0].country}\n "
-                    "Latitude: ${locationData.latitude.toString()}, "
-                    "Longitude: ${locationData.longitude.toString()}"
+                "${TextHelper.ADDRESS}: ${placeMarkList[0].name}, ${placeMarkList[0].country}\n "
+                    "${TextHelper.LATITUDE}: ${locationData.latitude.toString()}, "
+                    "${TextHelper.LONGITUDE}: ${locationData.longitude.toString()}"
             : _currentLocation = "";
       });
     } catch (exception) {

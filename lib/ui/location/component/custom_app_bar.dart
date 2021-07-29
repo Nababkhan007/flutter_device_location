@@ -14,7 +14,7 @@ class CustomAppBar extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Device Location",
+          title,
           style: TextStyle(
             color: Colors.white,
           ),

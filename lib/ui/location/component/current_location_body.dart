@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_device_location/helper/text_helper.dart';
 
 class CurrentLocationBody extends StatelessWidget {
   final String currentLocation;
@@ -17,7 +18,7 @@ class CurrentLocationBody extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            "Get device location",
+            TextHelper.GET_DEVICE_LOCATION,
             style: TextStyle(
               fontSize: 18.0,
               fontWeight: FontWeight.bold,
@@ -54,7 +55,7 @@ class CurrentLocationBody extends StatelessWidget {
               ),
             ),
             child: Text(
-              "Tap Here",
+              TextHelper.TAP_HERE,
               style: TextStyle(
                 fontSize: 16.0,
                 color: Colors.white,
