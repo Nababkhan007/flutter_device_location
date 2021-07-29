@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:location/location.dart';
 import 'package:flutter_device_location/current_location.dart';
 
@@ -55,6 +56,7 @@ class _DeviceLocationState extends State<DeviceLocation> {
               ),
               Text(
                 _currentLocation,
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 14.0,
                   color: Colors.redAccent,
@@ -86,12 +88,20 @@ class _DeviceLocationState extends State<DeviceLocation> {
   }
 
   _getDeviceLocation() async {
-    LocationData locationData = await CurrentLocation.getDeviceLocation();
-    setState(() {
-      locationData != null
-          ? _currentLocation =
-              "Latitude: ${locationData.latitude.toString()}, Longitude: ${locationData.longitude.toString()}"
-          : _currentLocation = "";
-    });
+    try {
+      LocationData locationData = await CurrentLocation.getDeviceLocation();
+      List<Placemark> placeMarkList = await placemarkFromCoordinates(
+          locationData.latitude, locationData.longitude);
+      setState(() {
+        locationData != null
+            ? _currentLocation =
+                "Address: ${placeMarkList[0].name}, ${placeMarkList[0].country}\n "
+                    "Latitude: ${locationData.latitude.toString()}, "
+                    "Longitude: ${locationData.longitude.toString()}"
+            : _currentLocation = "";
+      });
+    } catch (exception) {
+      throw exception;
+    }
   }
 }
